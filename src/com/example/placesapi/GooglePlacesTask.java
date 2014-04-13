@@ -4,7 +4,19 @@ import java.util.ArrayList;
 
 import android.os.AsyncTask;
 
-public class GooglePlacesTask extends AsyncTask<String, Void, String> {
+public class GooglePlacesTask extends
+		AsyncTask<String, Void, ArrayList<GoogleLocation>> {
+
+	private double latitude;
+	private double longitude;
+	private double radius;
+
+	public GooglePlacesTask(double latitude, double longitude, double radius) {
+
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.radius = radius;
+	}
 
 	/*
 	 * Example of an asynchronous task calling the GooglePlacesApi Interface
@@ -12,15 +24,11 @@ public class GooglePlacesTask extends AsyncTask<String, Void, String> {
 	 * list view
 	 */
 	@Override
-	protected String doInBackground(String... params) {
+	protected ArrayList<GoogleLocation> doInBackground(String... params) {
 
-		double lat = 39.952818;
-		double lng = -75.193565;
-		double radius = 1000;
-		ArrayList<Location> list = GooglePlacesAPI.getRestaurants(lat, lng,
-				radius);
-		System.out.println(list.size());
-		return new String();
+		ArrayList<GoogleLocation> list = GooglePlacesAPI.getRestaurants(
+				this.latitude, this.longitude, this.radius);
+		return list;
 	}
 
 }

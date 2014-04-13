@@ -16,7 +16,7 @@ public class GooglePlacesAPI {
 	 * Public Interface method to retrieve a list of Restaurant Locations (20 closest)
 	 * given lat/lng/radius
 	 */
-	public static ArrayList<Location> getRestaurants(double lat, double lng,
+	public static ArrayList<GoogleLocation> getRestaurants(double lat, double lng,
 			double radius) {
 
 		// form request url based on parameters
@@ -27,21 +27,21 @@ public class GooglePlacesAPI {
 		JSONObject resp = ApiConnection.getReponse(reqUrl);
 
 		// form the Location list of nearby restaurants
-		ArrayList<Location> results = parseGooglePlaceResponse(resp);
+		ArrayList<GoogleLocation> results = parseGooglePlaceResponse(resp);
 
 		return results;
 	}
 
-	private static ArrayList<Location> parseGooglePlaceResponse(
+	private static ArrayList<GoogleLocation> parseGooglePlaceResponse(
 			JSONObject jObject) {
-		ArrayList<Location> answer = new ArrayList<Location>();
+		ArrayList<GoogleLocation> answer = new ArrayList<GoogleLocation>();
 
 		try {
 			JSONArray resultsArray = (JSONArray) jObject
 					.getJSONArray("results");
 			System.out.println("resultsArray legnth: " + resultsArray.length());
 			for (int i = 0; i < resultsArray.length(); i++) {
-				answer.add(new Location(resultsArray.getJSONObject(i)));
+				answer.add(new GoogleLocation(resultsArray.getJSONObject(i)));
 				System.out.println(resultsArray.getJSONObject(i).toString());
 			}
 

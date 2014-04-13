@@ -7,6 +7,7 @@ import com.example.placesapi.GooglePlacesTask;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,16 +18,12 @@ import android.os.Build;
 
 public class MainActivity extends ActionBarActivity {
 
+	public static final int LOCATION_SELECT_ACTIVITY_ID = 1;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		new GooglePlacesTask().execute("");
-		
-		if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
 	}
 
 	@Override
@@ -64,6 +61,12 @@ public class MainActivity extends ActionBarActivity {
 					false);
 			return rootView;
 		}
+	}
+
+	// start the location search activity
+	public void onLocationSearch(View view) {
+		Intent i = new Intent(this, LocationSelectActivity.class);
+		startActivityForResult(i, LOCATION_SELECT_ACTIVITY_ID);
 	}
 
 }
